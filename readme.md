@@ -34,6 +34,7 @@ fs.attempt.unlink;
 fs.attempt.chmodSync;
 fs.attempt.chownSync;
 fs.attempt.closeSync;
+fs.attempt.existsSync;
 fs.attempt.fsyncSync;
 fs.attempt.mkdirSync;
 fs.attempt.realpathSync;

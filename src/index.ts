@@ -25,6 +25,7 @@ const FS = {
     chmodSync: attemptifySync ( fs.chmodSync, Handlers.onChangeError ),
     chownSync: attemptifySync ( fs.chownSync, Handlers.onChangeError ),
     closeSync: attemptifySync ( fs.closeSync, NOOP ),
+    existsSync: attemptifySync ( fs.existsSync, NOOP ),
     fsyncSync: attemptifySync ( fs.fsync, NOOP ),
     mkdirSync: attemptifySync ( fs.mkdirSync, NOOP ),
     realpathSync: attemptifySync ( fs.realpathSync, NOOP ),
