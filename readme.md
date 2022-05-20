@@ -49,6 +49,7 @@ fs.retry.readFile;
 fs.retry.rename;
 fs.retry.stat;
 fs.retry.write;
+fs.retry.writeFile;
 
 // Retry functions (sync)
 
@@ -59,6 +60,7 @@ fs.retry.readFileSync;
 fs.retry.renameSync;
 fs.retry.statSync;
 fs.retry.writeSync;
+fs.retry.writeFileSync;
 ```
 
 ## License
