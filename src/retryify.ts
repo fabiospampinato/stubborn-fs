@@ -29,7 +29,7 @@ const retryifyAsync = <T extends Function> ( fn: T, isRetriableError: (( error: 
 
           if ( isRetriableError ( error ) ) {
 
-            const delay = Math.round ( 100 + ( 400 * Math.random () ) );
+            const delay = Math.round ( 100 * Math.random () );
             const delayPromise = new Promise ( resolve => setTimeout ( resolve, delay ) );
 
             return delayPromise.then ( () => attempt.apply ( undefined, args ) );
