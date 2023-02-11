@@ -11,7 +11,7 @@
     "clean": "tsex clean",
     "compile": "tsex compile",
     "compile:watch": "tsex compile --watch",
-    "prepublishOnly": "npm run clean && npm run compile"
+    "prepublishOnly": "tsex prepare"
   },
   "keywords": [
     "fs",
@@ -21,8 +21,8 @@
     "reliable"
   ],
   "devDependencies": {
-    "@types/node": "^17.0.35",
-    "tsex": "^1.1.2",
-    "typescript": "^4.6.4"
+    "@types/node": "^18.13.0",
+    "tsex": "^2.1.0",
+    "typescript": "^4.9.5"
   }
 }
