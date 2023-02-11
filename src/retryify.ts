@@ -5,15 +5,15 @@ import RetryfyQueue from './retryify_queue';
 
 /* MAIN */
 
-const retryifyAsync = <T extends Function> ( fn: T, isRetriableError: (( error: NodeJS.ErrnoException ) => boolean | void) ): (( timeout: number ) => T) => {
+const retryifyAsync = <Args extends unknown[], Return> ( fn: ( ...args: Args ) => Promise<Return>, isRetriableError: (( error: unknown ) => boolean | void) ): (( timeout: number ) => ( ...args: Args ) => Promise<Return | undefined>) => {
 
   return function retrified ( timestamp: number ) {
 
-    return function attempt ( ...args ) {
+    return function attempt ( ...args: Args ): Promise<Return | undefined> {
 
       return RetryfyQueue.schedule ().then ( cleanup => {
 
-        const onResolve = result => {
+        const onResolve = ( result: Return ): Return => {
 
           cleanup ();
 
@@ -21,7 +21,7 @@ const retryifyAsync = <T extends Function> ( fn: T, isRetriableError: (( error: 
 
         };
 
-        const onReject = error => {
+        const onReject = ( error: unknown ): Promise<Return | undefined> => {
 
           cleanup ();
 
@@ -44,23 +44,23 @@ const retryifyAsync = <T extends Function> ( fn: T, isRetriableError: (( error: 
 
       });
 
-    } as any;
+    };
 
   };
 
 };
 
-const retryifySync = <T extends Function> ( fn: T, isRetriableError: (( error: NodeJS.ErrnoException ) => boolean | void) ): (( timeout: number ) => T) => {
+const retryifySync = <Args extends unknown[], Return> ( fn: ( ...args: Args ) => Return, isRetriableError: (( error: unknown ) => boolean | void) ): (( timeout: number ) => ( ...args: Args ) => Return | undefined) => {
 
   return function retrified ( timestamp: number ) {
 
-    return function attempt ( ...args ) {
+    return function attempt ( ...args: Args ): Return {
 
       try {
 
         return fn.apply ( undefined, args );
 
-      } catch ( error: any ) {
+      } catch ( error: unknown ) {
 
         if ( Date.now () > timestamp ) throw error;
 
@@ -70,7 +70,7 @@ const retryifySync = <T extends Function> ( fn: T, isRetriableError: (( error: N
 
       }
 
-    } as any;
+    };
 
   };
 

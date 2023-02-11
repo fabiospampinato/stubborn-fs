@@ -7,9 +7,9 @@ import process from 'node:process';
 
 const IS_USER_ROOT = process.getuid ? !process.getuid () : false;
 
-const LIMIT_FILES_DESCRIPTORS = 10000; //TODO: fetch the real limit from the filesystem
+const LIMIT_FILES_DESCRIPTORS = 10_000; //TODO: Fetch the real limit from the filesystem, somehow
 
-const NOOP = () => {};
+const NOOP = () => undefined;
 
 /* EXPORT */
 

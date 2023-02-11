@@ -12,7 +12,7 @@ import {retryifyAsync, retryifySync} from './retryify';
 
 const FS = {
   attempt: {
-
+    /* ASYNC */
     chmod: attemptifyAsync ( promisify ( fs.chmod ), Handlers.onChangeError ),
     chown: attemptifyAsync ( promisify ( fs.chown ), Handlers.onChangeError ),
     close: attemptifyAsync ( promisify ( fs.close ), NOOP ),
@@ -21,7 +21,7 @@ const FS = {
     realpath: attemptifyAsync ( promisify ( fs.realpath ), NOOP ),
     stat: attemptifyAsync ( promisify ( fs.stat ), NOOP ),
     unlink: attemptifyAsync ( promisify ( fs.unlink ), NOOP ),
-
+    /* SYNC */
     chmodSync: attemptifySync ( fs.chmodSync, Handlers.onChangeError ),
     chownSync: attemptifySync ( fs.chownSync, Handlers.onChangeError ),
     closeSync: attemptifySync ( fs.closeSync, NOOP ),
@@ -31,10 +31,9 @@ const FS = {
     realpathSync: attemptifySync ( fs.realpathSync, NOOP ),
     statSync: attemptifySync ( fs.statSync, NOOP ),
     unlinkSync: attemptifySync ( fs.unlinkSync, NOOP )
-
   },
   retry: {
-
+    /* ASYNC */
     close: retryifyAsync ( promisify ( fs.close ), Handlers.isRetriableError ),
     fsync: retryifyAsync ( promisify ( fs.fsync ), Handlers.isRetriableError ),
     open: retryifyAsync ( promisify ( fs.open ), Handlers.isRetriableError ),
@@ -43,7 +42,7 @@ const FS = {
     stat: retryifyAsync ( promisify ( fs.stat ), Handlers.isRetriableError ),
     write: retryifyAsync ( promisify ( fs.write ), Handlers.isRetriableError ),
     writeFile: retryifyAsync ( promisify ( fs.writeFile ), Handlers.isRetriableError ),
-
+    /* SYNC */
     closeSync: retryifySync ( fs.closeSync, Handlers.isRetriableError ),
     fsyncSync: retryifySync ( fs.fsyncSync, Handlers.isRetriableError ),
     openSync: retryifySync ( fs.openSync, Handlers.isRetriableError ),
@@ -52,7 +51,6 @@ const FS = {
     statSync: retryifySync ( fs.statSync, Handlers.isRetriableError ),
     writeSync: retryifySync ( fs.writeSync, Handlers.isRetriableError ),
     writeFileSync: retryifySync ( fs.writeFileSync, Handlers.isRetriableError )
-
   }
 };
 

@@ -9,7 +9,9 @@ const Handlers = {
 
   /* API */
 
-  isChangeErrorOk: ( error: NodeJS.ErrnoException ): boolean => { //URL: https://github.com/isaacs/node-graceful-fs/blob/master/polyfills.js#L315-L342
+  isChangeErrorOk: ( error: unknown ): boolean => { //URL: https://github.com/isaacs/node-graceful-fs/blob/master/polyfills.js#L315-L342
+
+    if ( !Handlers.isNodeError ( error ) ) return false;
 
     const {code} = error;
 
@@ -21,7 +23,15 @@ const Handlers = {
 
   },
 
-  isRetriableError: ( error: NodeJS.ErrnoException ): boolean => {
+  isNodeError: ( error: unknown ): error is NodeJS.ErrnoException => {
+
+    return error instanceof Error;
+
+  },
+
+  isRetriableError: ( error: unknown ): boolean => {
+
+    if ( !Handlers.isNodeError ( error ) ) return false;
 
     const {code} = error;
 
@@ -31,7 +41,9 @@ const Handlers = {
 
   },
 
-  onChangeError: ( error: NodeJS.ErrnoException ): void => {
+  onChangeError: ( error: unknown ): undefined => {
+
+    if ( !Handlers.isNodeError ( error ) ) throw error;
 
     if ( Handlers.isChangeErrorOk ( error ) ) return;
 
