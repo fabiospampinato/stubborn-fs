@@ -1,4 +1,8 @@
 
+/* IMPORT */
+
+import process from 'node:process';
+
 /* MAIN */
 
 const IS_USER_ROOT = process.getuid ? !process.getuid () : false;
