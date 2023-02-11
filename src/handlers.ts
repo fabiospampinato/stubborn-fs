@@ -25,7 +25,7 @@ const Handlers = {
 
   isNodeError: ( error: unknown ): error is NodeJS.ErrnoException => {
 
-    return error instanceof Error;
+    return ( error instanceof Error );
 
   },
 

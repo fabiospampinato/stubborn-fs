@@ -5,15 +5,17 @@ import RetryfyQueue from './retryify_queue';
 
 /* MAIN */
 
-const retryifyAsync = <Args extends unknown[], Return> ( fn: ( ...args: Args ) => Promise<Return>, isRetriableError: (( error: unknown ) => boolean | void) ): (( timeout: number ) => ( ...args: Args ) => Promise<Return>) => {
+//FIXME: There are a boatload of anys here, but apparently generics cannot be extended properly, so...
+
+const retryifyAsync = <FN extends Function> ( fn: FN, isRetriableError: (( error: unknown ) => boolean | void) ): (( timeout: number ) => FN) => {
 
   return function retrified ( timestamp: number ) {
 
-    return function attempt ( ...args: Args ): Promise<Return> {
+    return function attempt ( ...args: any ): any {
 
       return RetryfyQueue.schedule ().then ( cleanup => {
 
-        const onResolve = ( result: Return ): Return => {
+        const onResolve = ( result: any ): Promise<any> => {
 
           cleanup ();
 
@@ -21,7 +23,7 @@ const retryifyAsync = <Args extends unknown[], Return> ( fn: ( ...args: Args ) =
 
         };
 
-        const onReject = ( error: unknown ): Promise<Return> => {
+        const onReject = ( error: unknown ): Promise<any> => {
 
           cleanup ();
 
@@ -44,17 +46,17 @@ const retryifyAsync = <Args extends unknown[], Return> ( fn: ( ...args: Args ) =
 
       });
 
-    };
+    } as any;
 
   };
 
 };
 
-const retryifySync = <Args extends unknown[], Return> ( fn: ( ...args: Args ) => Return, isRetriableError: (( error: unknown ) => boolean | void) ): (( timeout: number ) => ( ...args: Args ) => Return) => {
+const retryifySync = <FN extends Function> ( fn: FN, isRetriableError: (( error: unknown ) => boolean | void) ): (( timeout: number ) => FN) => {
 
   return function retrified ( timestamp: number ) {
 
-    return function attempt ( ...args: Args ): Return {
+    return function attempt ( ...args: any ): any {
 
       try {
 
@@ -70,7 +72,7 @@ const retryifySync = <Args extends unknown[], Return> ( fn: ( ...args: Args ) =>
 
       }
 
-    };
+    } as any;
 
   };
 
