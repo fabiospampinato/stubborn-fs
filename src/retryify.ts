@@ -5,11 +5,11 @@ import RetryfyQueue from './retryify_queue';
 
 /* MAIN */
 
-const retryifyAsync = <Args extends unknown[], Return> ( fn: ( ...args: Args ) => Promise<Return>, isRetriableError: (( error: unknown ) => boolean | void) ): (( timeout: number ) => ( ...args: Args ) => Promise<Return | undefined>) => {
+const retryifyAsync = <Args extends unknown[], Return> ( fn: ( ...args: Args ) => Promise<Return>, isRetriableError: (( error: unknown ) => boolean | void) ): (( timeout: number ) => ( ...args: Args ) => Promise<Return>) => {
 
   return function retrified ( timestamp: number ) {
 
-    return function attempt ( ...args: Args ): Promise<Return | undefined> {
+    return function attempt ( ...args: Args ): Promise<Return> {
 
       return RetryfyQueue.schedule ().then ( cleanup => {
 
@@ -21,7 +21,7 @@ const retryifyAsync = <Args extends unknown[], Return> ( fn: ( ...args: Args ) =
 
         };
 
-        const onReject = ( error: unknown ): Promise<Return | undefined> => {
+        const onReject = ( error: unknown ): Promise<Return> => {
 
           cleanup ();
 
@@ -50,7 +50,7 @@ const retryifyAsync = <Args extends unknown[], Return> ( fn: ( ...args: Args ) =
 
 };
 
-const retryifySync = <Args extends unknown[], Return> ( fn: ( ...args: Args ) => Return, isRetriableError: (( error: unknown ) => boolean | void) ): (( timeout: number ) => ( ...args: Args ) => Return | undefined) => {
+const retryifySync = <Args extends unknown[], Return> ( fn: ( ...args: Args ) => Return, isRetriableError: (( error: unknown ) => boolean | void) ): (( timeout: number ) => ( ...args: Args ) => Return) => {
 
   return function retrified ( timestamp: number ) {
 
