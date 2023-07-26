@@ -35,7 +35,7 @@ const Handlers = {
 
     const {code} = error;
 
-    if ( code === 'EMFILE' || code === 'ENFILE' || code === 'EAGAIN' || code === 'EBUSY' || code === 'EACCESS' || code === 'EACCS' || code === 'EPERM' ) return true;
+    if ( code === 'EMFILE' || code === 'ENFILE' || code === 'EAGAIN' || code === 'EBUSY' || code === 'EACCESS' || code === 'EACCES' || code === 'EACCS' || code === 'EPERM' ) return true;
 
     return false;
 
