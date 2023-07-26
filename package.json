@@ -2,7 +2,7 @@
   "name": "stubborn-fs",
   "repository": "github:fabiospampinato/stubborn-fs",
   "description": "Stubborn versions of Node's fs functions that try really hard to do their job.",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "type": "module",
   "main": "dist/index.js",
   "exports": "./dist/index.js",
