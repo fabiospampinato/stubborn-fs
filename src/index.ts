@@ -6,6 +6,7 @@ import {promisify} from 'node:util';
 import {attemptifyAsync, attemptifySync} from 'stubborn-utils';
 import {retryifyAsync, retryifySync} from 'stubborn-utils';
 import {ATTEMPTIFY_CHANGE_ERROR_OPTIONS, ATTEMPTIFY_NOOP_OPTIONS, RETRYIFY_OPTIONS} from './constants';
+import type {RetryifyAsyncCallOptions, RetryifySyncCallOptions} from 'stubborn-utils';
 
 /* MAIN */
 
@@ -56,3 +57,4 @@ const FS = {
 /* EXPORT */
 
 export default FS;
+export type {RetryifyAsyncCallOptions, RetryifySyncCallOptions};

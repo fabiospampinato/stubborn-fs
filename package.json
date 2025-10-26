@@ -22,7 +22,7 @@
     "reliable"
   ],
   "dependencies": {
-    "stubborn-utils": "^1.0.0"
+    "stubborn-utils": "^1.0.1"
   },
   "devDependencies": {
     "@types/node": "^18.19.39",
