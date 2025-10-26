@@ -3,54 +3,53 @@
 
 import fs from 'node:fs';
 import {promisify} from 'node:util';
-import {attemptifyAsync, attemptifySync} from './attemptify';
-import {NOOP} from './constants';
-import Handlers from './handlers';
-import {retryifyAsync, retryifySync} from './retryify';
+import {attemptifyAsync, attemptifySync} from 'stubborn-utils';
+import {retryifyAsync, retryifySync} from 'stubborn-utils';
+import {ATTEMPTIFY_CHANGE_ERROR_OPTIONS, ATTEMPTIFY_NOOP_OPTIONS, RETRYIFY_OPTIONS} from './constants';
 
 /* MAIN */
 
 const FS = {
   attempt: {
     /* ASYNC */
-    chmod: attemptifyAsync ( promisify ( fs.chmod ), Handlers.onChangeError ),
-    chown: attemptifyAsync ( promisify ( fs.chown ), Handlers.onChangeError ),
-    close: attemptifyAsync ( promisify ( fs.close ), NOOP ),
-    fsync: attemptifyAsync ( promisify ( fs.fsync ), NOOP ),
-    mkdir: attemptifyAsync ( promisify ( fs.mkdir ), NOOP ),
-    realpath: attemptifyAsync ( promisify ( fs.realpath ), NOOP ),
-    stat: attemptifyAsync ( promisify ( fs.stat ), NOOP ),
-    unlink: attemptifyAsync ( promisify ( fs.unlink ), NOOP ),
+    chmod: attemptifyAsync ( promisify ( fs.chmod ), ATTEMPTIFY_CHANGE_ERROR_OPTIONS ),
+    chown: attemptifyAsync ( promisify ( fs.chown ), ATTEMPTIFY_CHANGE_ERROR_OPTIONS ),
+    close: attemptifyAsync ( promisify ( fs.close ), ATTEMPTIFY_NOOP_OPTIONS ),
+    fsync: attemptifyAsync ( promisify ( fs.fsync ), ATTEMPTIFY_NOOP_OPTIONS ),
+    mkdir: attemptifyAsync ( promisify ( fs.mkdir ), ATTEMPTIFY_NOOP_OPTIONS ),
+    realpath: attemptifyAsync ( promisify ( fs.realpath ), ATTEMPTIFY_NOOP_OPTIONS ),
+    stat: attemptifyAsync ( promisify ( fs.stat ), ATTEMPTIFY_NOOP_OPTIONS ),
+    unlink: attemptifyAsync ( promisify ( fs.unlink ), ATTEMPTIFY_NOOP_OPTIONS ),
     /* SYNC */
-    chmodSync: attemptifySync ( fs.chmodSync, Handlers.onChangeError ),
-    chownSync: attemptifySync ( fs.chownSync, Handlers.onChangeError ),
-    closeSync: attemptifySync ( fs.closeSync, NOOP ),
-    existsSync: attemptifySync ( fs.existsSync, NOOP ),
-    fsyncSync: attemptifySync ( fs.fsync, NOOP ),
-    mkdirSync: attemptifySync ( fs.mkdirSync, NOOP ),
-    realpathSync: attemptifySync ( fs.realpathSync, NOOP ),
-    statSync: attemptifySync ( fs.statSync, NOOP ),
-    unlinkSync: attemptifySync ( fs.unlinkSync, NOOP )
+    chmodSync: attemptifySync ( fs.chmodSync, ATTEMPTIFY_CHANGE_ERROR_OPTIONS ),
+    chownSync: attemptifySync ( fs.chownSync, ATTEMPTIFY_CHANGE_ERROR_OPTIONS ),
+    closeSync: attemptifySync ( fs.closeSync, ATTEMPTIFY_NOOP_OPTIONS ),
+    existsSync: attemptifySync ( fs.existsSync, ATTEMPTIFY_NOOP_OPTIONS ),
+    fsyncSync: attemptifySync ( fs.fsync, ATTEMPTIFY_NOOP_OPTIONS ),
+    mkdirSync: attemptifySync ( fs.mkdirSync, ATTEMPTIFY_NOOP_OPTIONS ),
+    realpathSync: attemptifySync ( fs.realpathSync, ATTEMPTIFY_NOOP_OPTIONS ),
+    statSync: attemptifySync ( fs.statSync, ATTEMPTIFY_NOOP_OPTIONS ),
+    unlinkSync: attemptifySync ( fs.unlinkSync, ATTEMPTIFY_NOOP_OPTIONS )
   },
   retry: {
     /* ASYNC */
-    close: retryifyAsync ( promisify ( fs.close ), Handlers.isRetriableError ),
-    fsync: retryifyAsync ( promisify ( fs.fsync ), Handlers.isRetriableError ),
-    open: retryifyAsync ( promisify ( fs.open ), Handlers.isRetriableError ),
-    readFile: retryifyAsync ( promisify ( fs.readFile ), Handlers.isRetriableError ),
-    rename: retryifyAsync ( promisify ( fs.rename ), Handlers.isRetriableError ),
-    stat: retryifyAsync ( promisify ( fs.stat ), Handlers.isRetriableError ),
-    write: retryifyAsync ( promisify ( fs.write ), Handlers.isRetriableError ),
-    writeFile: retryifyAsync ( promisify ( fs.writeFile ), Handlers.isRetriableError ),
+    close: retryifyAsync ( promisify ( fs.close ), RETRYIFY_OPTIONS ),
+    fsync: retryifyAsync ( promisify ( fs.fsync ), RETRYIFY_OPTIONS ),
+    open: retryifyAsync ( promisify ( fs.open ), RETRYIFY_OPTIONS ),
+    readFile: retryifyAsync ( promisify ( fs.readFile ), RETRYIFY_OPTIONS ),
+    rename: retryifyAsync ( promisify ( fs.rename ), RETRYIFY_OPTIONS ),
+    stat: retryifyAsync ( promisify ( fs.stat ), RETRYIFY_OPTIONS ),
+    write: retryifyAsync ( promisify ( fs.write ), RETRYIFY_OPTIONS ),
+    writeFile: retryifyAsync ( promisify ( fs.writeFile ), RETRYIFY_OPTIONS ),
     /* SYNC */
-    closeSync: retryifySync ( fs.closeSync, Handlers.isRetriableError ),
-    fsyncSync: retryifySync ( fs.fsyncSync, Handlers.isRetriableError ),
-    openSync: retryifySync ( fs.openSync, Handlers.isRetriableError ),
-    readFileSync: retryifySync ( fs.readFileSync, Handlers.isRetriableError ),
-    renameSync: retryifySync ( fs.renameSync, Handlers.isRetriableError ),
-    statSync: retryifySync ( fs.statSync, Handlers.isRetriableError ),
-    writeSync: retryifySync ( fs.writeSync, Handlers.isRetriableError ),
-    writeFileSync: retryifySync ( fs.writeFileSync, Handlers.isRetriableError )
+    closeSync: retryifySync ( fs.closeSync, RETRYIFY_OPTIONS ),
+    fsyncSync: retryifySync ( fs.fsyncSync, RETRYIFY_OPTIONS ),
+    openSync: retryifySync ( fs.openSync, RETRYIFY_OPTIONS ),
+    readFileSync: retryifySync ( fs.readFileSync, RETRYIFY_OPTIONS ),
+    renameSync: retryifySync ( fs.renameSync, RETRYIFY_OPTIONS ),
+    statSync: retryifySync ( fs.statSync, RETRYIFY_OPTIONS ),
+    writeSync: retryifySync ( fs.writeSync, RETRYIFY_OPTIONS ),
+    writeFileSync: retryifySync ( fs.writeFileSync, RETRYIFY_OPTIONS )
   }
 };
 

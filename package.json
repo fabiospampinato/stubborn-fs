@@ -20,9 +20,12 @@
     "stubborn",
     "reliable"
   ],
+  "dependencies": {
+    "stubborn-utils": "^1.0.0"
+  },
   "devDependencies": {
-    "@types/node": "^20.4.6",
-    "tsex": "^3.0.0",
-    "typescript": "^5.1.6"
+    "@types/node": "^18.19.39",
+    "tsex": "^4.0.2",
+    "typescript": "^5.5.2"
   }
 }
